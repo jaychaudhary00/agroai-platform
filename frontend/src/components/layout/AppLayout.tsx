@@ -58,7 +58,7 @@ export function AppLayout() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { user } = useSelector((s: RootState) => s.auth);
-  const { notifications } = useSelector((s: RootState) => s.notifications || { notifications: [] });
+  const { notifications } = useSelector((s: any) => s.notifications || { notifications: [] });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
 
