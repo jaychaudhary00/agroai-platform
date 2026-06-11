@@ -9,6 +9,8 @@ export interface IUserDoc extends Document {
   location?: { state: string; district: string; coordinates?: { lat: number; lng: number } };
   avatar?: string; isVerified: boolean; isActive: boolean;
   fcmToken?: string; refreshToken?: string;
+  passwordResetToken?: string;
+  passwordResetExpiry?: Date;
   comparePassword(candidate: string): Promise<boolean>;
 }
 
