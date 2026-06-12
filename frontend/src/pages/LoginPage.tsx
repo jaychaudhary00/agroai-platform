@@ -5,10 +5,42 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { RootState, AppDispatch, loginUser } from '../store';
 
+// ── Instagram SVG icon ────────────────────────────────────────────────────────
+function InstaIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+    </svg>
+  );
+}
+
+// ── LinkedIn SVG icon ─────────────────────────────────────────────────────────
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+      <rect x="2" y="9" width="4" height="12"/>
+      <circle cx="4" cy="4" r="2"/>
+    </svg>
+  );
+}
+
+// ── Mail SVG icon ─────────────────────────────────────────────────────────────
+function MailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="3"/>
+      <path d="M2 7l10 7 10-7"/>
+    </svg>
+  );
+}
+
+// ── Floating leaf decoration ──────────────────────────────────────────────────
 function FloatingLeaf({ x, y, size, rotate, opacity, delay }: any) {
   return (
-    <div
-      className="absolute pointer-events-none"
+    <div className="absolute pointer-events-none"
       style={{ left: x, top: y, opacity, animationDelay: delay, animation: 'floatLeaf 6s ease-in-out infinite' }}>
       <svg width={size} height={size} viewBox="0 0 30 30" style={{ transform: `rotate(${rotate}deg)` }}>
         <path d="M15 2 Q25 8 25 18 Q20 28 10 26 Q2 22 5 12 Q8 4 15 2Z" fill="#22c55e" opacity="0.6"/>
@@ -47,10 +79,6 @@ export function LoginPage() {
           33% { transform: translateY(-12px) rotate(5deg); }
           66% { transform: translateY(-6px) rotate(-5deg); }
         }
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
@@ -60,14 +88,13 @@ export function LoginPage() {
         .fade-up-3 { animation: fadeUp 0.5s 0.2s ease forwards; opacity: 0; }
       `}</style>
 
-      {/* Left panel - decorative */}
+      {/* ── Left panel — desktop only ───────────────────────────────────── */}
       <div className="hidden lg:flex flex-col justify-between w-1/2 bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 relative overflow-hidden p-12">
         {/* Background blobs */}
         <div className="absolute top-0 left-0 w-80 h-80 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-1/3 translate-y-1/3" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2" />
 
-        {/* Floating leaves */}
         <FloatingLeaf x="10%" y="20%" size={40} rotate={15} opacity={0.4} delay="0s" />
         <FloatingLeaf x="75%" y="35%" size={28} rotate={-30} opacity={0.3} delay="1s" />
         <FloatingLeaf x="20%" y="70%" size={35} rotate={45} opacity={0.35} delay="2s" />
@@ -82,10 +109,9 @@ export function LoginPage() {
           </div>
         </div>
 
-        {/* Main illustration area */}
+        {/* Illustration */}
         <div className="relative z-10 flex-1 flex flex-col justify-center">
           <svg viewBox="0 0 400 300" className="w-full max-w-sm mx-auto">
-            {/* Farm scene */}
             <defs>
               <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="rgba(255,255,255,0.2)"/>
@@ -93,7 +119,6 @@ export function LoginPage() {
               </linearGradient>
             </defs>
             <ellipse cx="200" cy="280" rx="200" ry="40" fill="rgba(255,255,255,0.1)"/>
-            {/* Field */}
             {[0,1,2,3,4,5,6].map(i => {
               const x = 30 + i * 52;
               return (
@@ -105,7 +130,6 @@ export function LoginPage() {
                 </g>
               );
             })}
-            {/* Phone */}
             <rect x="155" y="80" width="90" height="150" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="2"/>
             <rect x="161" y="92" width="78" height="106" rx="6" fill="rgba(255,255,255,0.1)"/>
             <rect x="164" y="96" width="72" height="20" rx="4" fill="rgba(255,255,255,0.2)"/>
@@ -122,43 +146,47 @@ export function LoginPage() {
           <p className="text-white/70 text-center text-sm mt-2 max-w-xs mx-auto">AI-powered tools for disease detection, mandi prices, and crop management</p>
         </div>
 
-        {/* Developer Social Links */}
-        <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20">
-          <p className="text-white/70 text-xs font-medium uppercase tracking-wider mb-3">Built by</p>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl shrink-0">👨‍💻</div>
+        {/* ── Developer Card ─────────────────────────────────────────────── */}
+        <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+          {/* Top row: avatar + name */}
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl shrink-0">👨‍💻</div>
             <div>
-              <p className="text-white font-semibold text-sm">Jay Chaudhari</p>
-              <p className="text-white/60 text-xs">MERN Stack Developer</p>
+              <p className="text-white font-bold text-sm leading-tight">Jay Chaudhari</p>
+              <p className="text-white/60 text-xs">MERN Stack Developer · Surat</p>
+            </div>
+            <div className="ml-auto">
+              <span className="text-xs bg-white/15 text-white/80 px-2 py-0.5 rounded-full">Built this</span>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          {/* Social links row */}
+          <div className="flex flex-col gap-1.5">
             <a href="https://www.instagram.com/jay_chaudhari74" target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors text-sm group">
-              <span className="w-7 h-7 bg-white/15 group-hover:bg-white/25 rounded-lg flex items-center justify-center text-base transition-colors">📸</span>
-              <span>@jay_chaudhari74</span>
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group">
+              <span className="text-pink-300 group-hover:text-pink-200"><InstaIcon /></span>
+              <span className="text-white/80 text-xs font-medium group-hover:text-white">@jay_chaudhari74</span>
             </a>
             <a href="https://www.linkedin.com/in/chaudhari-jay-b51163299" target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors text-sm group">
-              <span className="w-7 h-7 bg-white/15 group-hover:bg-white/25 rounded-lg flex items-center justify-center text-base transition-colors">💼</span>
-              <span>linkedin.com/in/chaudhari-jay</span>
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group">
+              <span className="text-blue-300 group-hover:text-blue-200"><LinkedInIcon /></span>
+              <span className="text-white/80 text-xs font-medium group-hover:text-white">chaudhari-jay</span>
             </a>
             <a href="mailto:cjay49586@gmail.com"
-              className="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors text-sm group">
-              <span className="w-7 h-7 bg-white/15 group-hover:bg-white/25 rounded-lg flex items-center justify-center text-base transition-colors">✉️</span>
-              <span>cjay49586@gmail.com</span>
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group">
+              <span className="text-green-300 group-hover:text-green-200"><MailIcon /></span>
+              <span className="text-white/80 text-xs font-medium group-hover:text-white">cjay49586@gmail.com</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Right panel - form */}
-      <div className="flex-1 flex items-center justify-center p-6 bg-white dark:bg-gray-950">
+      {/* ── Right panel — Login form ────────────────────────────────────── */}
+      <div className="flex-1 flex items-center justify-center p-5 bg-white dark:bg-gray-950">
         <div className="w-full max-w-md">
 
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-9 h-9 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md">🌾</div>
+            <div className="w-9 h-9 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md">🌾</div>
             <span className="font-extrabold text-gray-900 dark:text-white text-xl">AgroAI</span>
           </div>
 
@@ -222,8 +250,36 @@ export function LoginPage() {
             <Link to="/register" className="text-green-600 hover:text-green-700 font-semibold hover:underline">{t('auth.register')}</Link>
           </p>
 
-          {/* Decorative dots */}
-          <div className="flex justify-center gap-2 mt-8">
+          {/* ── Mobile-only developer social card ──────────────────────── */}
+          <div className="lg:hidden mt-8 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-4 border border-green-100 dark:border-green-800">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-9 h-9 rounded-xl bg-green-600 flex items-center justify-center text-lg shrink-0">👨‍💻</div>
+              <div>
+                <p className="text-gray-900 dark:text-white font-bold text-sm">Jay Chaudhari</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs">MERN Stack Developer</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <a href="https://www.instagram.com/jay_chaudhari74" target="_blank" rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-pink-200 hover:bg-pink-50 dark:hover:bg-pink-900/10 transition-all">
+                <span className="text-pink-500"><InstaIcon /></span>
+                <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">Instagram</span>
+              </a>
+              <a href="https://www.linkedin.com/in/chaudhari-jay-b51163299" target="_blank" rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all">
+                <span className="text-blue-600"><LinkedInIcon /></span>
+                <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">LinkedIn</span>
+              </a>
+              <a href="mailto:cjay49586@gmail.com"
+                className="flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-green-200 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all">
+                <span className="text-green-600"><MailIcon /></span>
+                <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">Email</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-6">
             {[0,1,2].map(i => (
               <div key={i} className={`rounded-full transition-all ${i === 0 ? 'w-6 h-2 bg-green-500' : 'w-2 h-2 bg-gray-200 dark:bg-gray-700'}`} />
             ))}
