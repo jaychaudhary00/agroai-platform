@@ -198,11 +198,12 @@ export const Notification = mongoose.model('Notification', NotificationSchema);
 // ─── Reminder Model ───────────────────────────────────────────────────────────
 const ReminderSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  title: { type: String, required: true },
-  description: String,
-  dueDate: { type: Date, required: true },
+  plantName: { type: String, required: true },  // title → plantName
+  type: { type: String, enum: ['watering', 'fertilizing', 'pruning', 'repotting', 'other'], default: 'watering' },
+  scheduledAt: { type: Date, required: true },  // dueDate → scheduledAt
+  repeatEvery: { type: Number },                // add this
+  note: { type: String },                       // description → note
   isCompleted: { type: Boolean, default: false },
-  type: { type: String, enum: ['watering', 'fertilizing', 'harvesting', 'pesticide', 'other'], default: 'other' },
 }, { timestamps: true });
 export const Reminder = mongoose.model('Reminder', ReminderSchema);
 
