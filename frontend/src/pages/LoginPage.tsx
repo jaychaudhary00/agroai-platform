@@ -122,14 +122,32 @@ export function LoginPage() {
           <p className="text-white/70 text-center text-sm mt-2 max-w-xs mx-auto">AI-powered tools for disease detection, mandi prices, and crop management</p>
         </div>
 
-        {/* Testimonial */}
+        {/* Developer Social Links */}
         <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl shrink-0">👨‍🌾</div>
+          <p className="text-white/70 text-xs font-medium uppercase tracking-wider mb-3">Built by</p>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl shrink-0">👨‍💻</div>
             <div>
-              <p className="text-white/90 text-sm leading-relaxed">"AgroAI helped me identify crop disease early and saved my entire wheat harvest. The mandi prices feature is incredible!"</p>
-              <p className="text-white/60 text-xs mt-2">— Rajesh Patel, Gujarat Farmer</p>
+              <p className="text-white font-semibold text-sm">Jay Chaudhari</p>
+              <p className="text-white/60 text-xs">MERN Stack Developer</p>
             </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <a href="https://www.instagram.com/jay_chaudhari74" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors text-sm group">
+              <span className="w-7 h-7 bg-white/15 group-hover:bg-white/25 rounded-lg flex items-center justify-center text-base transition-colors">📸</span>
+              <span>@jay_chaudhari74</span>
+            </a>
+            <a href="https://www.linkedin.com/in/chaudhari-jay-b51163299" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors text-sm group">
+              <span className="w-7 h-7 bg-white/15 group-hover:bg-white/25 rounded-lg flex items-center justify-center text-base transition-colors">💼</span>
+              <span>linkedin.com/in/chaudhari-jay</span>
+            </a>
+            <a href="mailto:cjay49586@gmail.com"
+              className="flex items-center gap-2.5 text-white/80 hover:text-white transition-colors text-sm group">
+              <span className="w-7 h-7 bg-white/15 group-hover:bg-white/25 rounded-lg flex items-center justify-center text-base transition-colors">✉️</span>
+              <span>cjay49586@gmail.com</span>
+            </a>
           </div>
         </div>
       </div>

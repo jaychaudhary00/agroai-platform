@@ -16,6 +16,7 @@ export function ProductDetailPage() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -27,6 +28,7 @@ export function ProductDetailPage() {
     ])
       .then(([productRes, reviewsRes]) => {
         setProduct(productRes.data.data);
+        setSelectedImage(0);
         setReviews(reviewsRes.data.data);
       })
       .catch(() => toast.error('Failed to load product'))
@@ -86,9 +88,9 @@ export function ProductDetailPage() {
         {/* Image */}
         <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
           <div className="h-72 bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
-            {product.images?.[0] ? (
+            {product.images?.[selectedImage] ? (
               <img
-                src={product.images[0]}
+                src={product.images[selectedImage]}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -103,7 +105,10 @@ export function ProductDetailPage() {
                   key={i}
                   src={img}
                   alt={`${product.name} ${i + 1}`}
-                  className="w-14 h-14 object-cover rounded-lg border-2 border-transparent hover:border-green-500 cursor-pointer transition-colors"
+                  onClick={() => setSelectedImage(i)}
+                  className={`w-14 h-14 object-cover rounded-lg border-2 cursor-pointer transition-colors ${
+                    selectedImage === i ? 'border-green-500' : 'border-transparent hover:border-green-400'
+                  }`}
                 />
               ))}
             </div>
