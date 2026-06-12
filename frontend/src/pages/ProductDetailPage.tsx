@@ -16,7 +16,8 @@ export function ProductDetailPage() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [activeImage, setActiveImage] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -28,7 +29,6 @@ export function ProductDetailPage() {
     ])
       .then(([productRes, reviewsRes]) => {
         setProduct(productRes.data.data);
-        setSelectedImage(0);
         setReviews(reviewsRes.data.data);
       })
       .catch(() => toast.error('Failed to load product'))
@@ -87,10 +87,13 @@ export function ProductDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Image */}
         <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
-          <div className="h-72 bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
-            {product.images?.[selectedImage] ? (
+          <div
+            className="h-72 bg-gray-50 dark:bg-gray-800 flex items-center justify-center cursor-zoom-in"
+            onClick={() => product.images?.length > 0 && setLightboxOpen(true)}
+          >
+            {product.images?.[activeImage] ? (
               <img
-                src={product.images[selectedImage]}
+                src={product.images[activeImage]}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -100,14 +103,14 @@ export function ProductDetailPage() {
           </div>
           {product.images?.length > 1 && (
             <div className="flex gap-2 p-3">
-              {product.images.slice(0, 4).map((img: string, i: number) => (
+              {product.images.map((img: string, i: number) => (
                 <img
                   key={i}
                   src={img}
                   alt={`${product.name} ${i + 1}`}
-                  onClick={() => setSelectedImage(i)}
+                  onClick={() => setActiveImage(i)}
                   className={`w-14 h-14 object-cover rounded-lg border-2 cursor-pointer transition-colors ${
-                    selectedImage === i ? 'border-green-500' : 'border-transparent hover:border-green-400'
+                    i === activeImage ? 'border-green-500' : 'border-transparent hover:border-green-300'
                   }`}
                 />
               ))}
@@ -250,6 +253,58 @@ export function ProductDetailPage() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Image Lightbox / Slideshow */}
+      {lightboxOpen && product.images?.length > 0 && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+          onClick={() => setLightboxOpen(false)}
+        >
+          <button
+            onClick={() => setLightboxOpen(false)}
+            className="absolute top-4 right-4 text-white text-3xl leading-none hover:text-gray-300"
+          >
+            ×
+          </button>
+
+          {product.images.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveImage((i: number) => (i - 1 + product.images.length) % product.images.length);
+              }}
+              className="absolute left-2 sm:left-6 text-white text-4xl px-3 py-2 hover:text-gray-300"
+            >
+              ‹
+            </button>
+          )}
+
+          <img
+            src={product.images[activeImage]}
+            alt={`${product.name} ${activeImage + 1}`}
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-[95vw] max-h-[85vh] object-contain"
+          />
+
+          {product.images.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveImage((i: number) => (i + 1) % product.images.length);
+              }}
+              className="absolute right-2 sm:right-6 text-white text-4xl px-3 py-2 hover:text-gray-300"
+            >
+              ›
+            </button>
+          )}
+
+          {product.images.length > 1 && (
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 text-white text-sm">
+              {activeImage + 1} / {product.images.length}
+            </div>
+          )}
         </div>
       )}
     </div>
